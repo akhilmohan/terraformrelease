@@ -31,11 +31,26 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
           script: |
-            try {
-            const { Octokit } = require('@octokit/action');
-            const { owner, repo } = context.repo;
-            const latestRelease = await Octokit.repos.getLatestRelease({ owner, repo });
+            const { github } = require('@octokit/action');  # Still managed by github-script
 
+            async function getLatestRelease() {
+              try {
+                const { owner, repo } = context.repo;
+                const latestRelease = await github.repos.getLatestRelease({ owner, repo });
+                console.log("Latest release:", latestRelease.data);
+
+                // Do something with the release data
+              } catch (error) {
+                console.error("Error fetching latest release:", error);
+              }
+            }
+            getLatestRelease();  
+        # with:
+        #   script: |
+        #     try {
+        #     const { Octokit } = require('@octokit/action');
+        #     const { owner, repo } = context.repo;
+        #     const latestRelease = await Octokit.repos.getLatestRelease({ owner, repo });
             # const { execSync } = require('child_process');
             # const octokit = new Octokit()
             # const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
@@ -46,10 +61,10 @@ jobs:
             #     'X-GitHub-Api-Version': '2022-11-28'
             #   }
             # })
-            console.log(`latest release: ${JSON.stringify(latestRelease.data)}`);
-            } catch (error) {
-                console.error("Error fetching latest release:", error);
-            }
+            # console.log(`latest release: ${JSON.stringify(latestRelease.data)}`);
+            # } catch (error) {
+            #     console.error("Error fetching latest release:", error);
+            # }
       #       execSync('git pull --tags');
       #       const status = execSync(`git diff --name-only ${latestRelease.data.tag_name} origin/main`, { encoding: 'utf-8'});
       #       console.log(status);
