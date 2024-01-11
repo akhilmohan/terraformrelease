@@ -31,6 +31,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
           script: |
+            try {
             const { Octokit } = require('@octokit/action');
             const { owner, repo } = context.repo;
             const latestRelease = await Octokit.repos.getLatestRelease({ owner, repo });
@@ -46,6 +47,9 @@ jobs:
             #   }
             # })
             console.log(`latest release: ${JSON.stringify(latestRelease.data)}`);
+            } catch (error) {
+                console.error("Error fetching latest release:", error);
+            }
       #       execSync('git pull --tags');
       #       const status = execSync(`git diff --name-only ${latestRelease.data.tag_name} origin/main`, { encoding: 'utf-8'});
       #       console.log(status);
