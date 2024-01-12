@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/akhilmohan/terraformrelease/compare/simple_network-v0.6.0...simple_network-v0.6.1) (2024-01-12)
+
+
+### Bug Fixes
+
+* **modules/simple_network:** name change ([a1bc517](https://github.com/akhilmohan/terraformrelease/commit/a1bc5171af958cfaece0a80ad8707b03f279d941))
+
 ## [0.6.0](https://github.com/akhilmohan/terraformrelease/compare/simple_network-v0.5.1...simple_network-v0.6.0) (2024-01-12)
 
 
