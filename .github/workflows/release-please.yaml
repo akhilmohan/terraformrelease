@@ -27,6 +27,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
           script: |
+            const { execSync } = require('child_process');
             const { owner, repo } = context.repo;
             const latestRelease = await github.rest.repos.getLatestRelease({ owner, repo });
             console.log(`latest release: ${JSON.stringify(latestRelease.data)}`);
