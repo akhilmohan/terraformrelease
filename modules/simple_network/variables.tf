@@ -5,5 +5,5 @@ variable "project_name" {
 
 variable "vpc_network_name" {
   type        = string
-  description = "The name of the VPC network"
+  description = "The name of the VPC network name"
 }
