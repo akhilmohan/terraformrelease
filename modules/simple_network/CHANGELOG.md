@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/akhilmohan/terraformrelease/compare/simple_network-v0.5.0...simple_network-v0.5.1) (2024-01-12)
+
+
+### Bug Fixes
+
+* **modules/simple_network:** Network desc ([#21](https://github.com/akhilmohan/terraformrelease/issues/21)) ([0f5fc98](https://github.com/akhilmohan/terraformrelease/commit/0f5fc98753b592e7567b7e1a515c7ece9de771f1))
+
 ## [0.5.0](https://github.com/akhilmohan/terraformrelease/compare/simple_network-v0.4.0...simple_network-v0.5.0) (2024-01-12)
 
 
