@@ -27,7 +27,7 @@ jobs:
             async function getLatestRelease() {
               try {
                 const { owner, repo } = context.repo;
-                const latestRelease = await github.repos.getLatestRelease({ owner, repo });
+                const latestRelease = await github.rest.repos.getLatestRelease({ owner, repo });
                 console.log("Latest release:", latestRelease.data);
 
                 // Do something with the release data
