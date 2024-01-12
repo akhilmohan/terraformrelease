@@ -35,6 +35,7 @@ jobs:
             const status = execSync(`git diff --name-only ${latestRelease.data.tag_name} origin/main`, { encoding: 'utf-8'});
             console.log(`status: ${status}`);
             const changes = status.split('\n');
+            console.log(`changes: ${changes}`);
             let modules_paths = new Set();
             for (const change of changes) {
               if (change.startsWith('modules/')) {
