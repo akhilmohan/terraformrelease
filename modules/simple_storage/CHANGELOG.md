@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/akhilmohan/terraformrelease/compare/simple_storage-v0.1.1...simple_storage-v0.1.2) (2024-01-12)
+
+
+### Bug Fixes
+
+* **modules/simple_storage:** bucket name desc updated ([93d8736](https://github.com/akhilmohan/terraformrelease/commit/93d873630f1b2e4b4af26f3d03e36bbdf7f8a5c5))
+
 ## [0.1.1](https://github.com/akhilmohan/terraformrelease/compare/simple_storage-v0.1.0...simple_storage-v0.1.1) (2024-01-12)
 
 
