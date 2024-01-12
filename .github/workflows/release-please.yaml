@@ -74,7 +74,7 @@ jobs:
 
   release-please-release:
     runs-on: ubuntu-latest
-    needs: find-release-changes
+    # needs: find-release-changes
     # strategy:
     #   fail-fast: false
     #   matrix:
