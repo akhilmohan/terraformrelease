@@ -29,8 +29,6 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
             const latestRelease = await github.rest.repos.getLatestRelease({ owner, repo });
-            const octokit = new Octokit()
-            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
             console.log(`latest release: ${JSON.stringify(latestRelease.data)}`);
             execSync('git pull --tags');
             const status = execSync(`git diff --name-only ${latestRelease.data.tag_name} origin/main`, { encoding: 'utf-8'});
