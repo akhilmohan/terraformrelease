@@ -33,7 +33,7 @@ jobs:
             console.log(`latest release: ${JSON.stringify(latestRelease.data)}`);
             execSync('git pull --tags');
             const status = execSync(`git diff --name-only ${latestRelease.data.tag_name} origin/main`, { encoding: 'utf-8'});
-            console.log(status);
+            console.log(`status: ${status}`);
             const changes = status.split('\n');
             let modules_paths = new Set();
             for (const change of changes) {
@@ -43,7 +43,7 @@ jobs:
               };
             }
             modules_paths = Array.from(modules_paths);
-            console.log(modules_paths);
+            console.log(`paths: ${modules_paths}`);
             return modules_paths;
 
   validate-output:
