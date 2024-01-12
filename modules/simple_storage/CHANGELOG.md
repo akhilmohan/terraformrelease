@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/akhilmohan/terraformrelease/compare/simple_storage-v0.2.0...simple_storage-v0.2.1) (2024-01-12)
+
+
+### Bug Fixes
+
+* **modules/simple_storage:** bkt simp desc ([#18](https://github.com/akhilmohan/terraformrelease/issues/18)) ([cdfa560](https://github.com/akhilmohan/terraformrelease/commit/cdfa560939c5031bb78ea2ec250ec88761f9520d))
+
 ## [0.2.0](https://github.com/akhilmohan/terraformrelease/compare/simple_storage-v0.1.2...simple_storage-v0.2.0) (2024-01-12)
 
 
