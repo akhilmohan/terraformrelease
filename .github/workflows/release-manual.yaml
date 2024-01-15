@@ -41,7 +41,7 @@ jobs:
           COMBINED_NAME_AND_VERSION="${{ github.event.inputs.module_name }} $NEW_VERSION"
           echo "COMBINED_NAME_AND_VERSION: $COMBINED_NAME_AND_VERSION"  # Verify variable expansion
 
-      - run: echo "Value of COMBINED_NAME_AND_VERSION outside action: $COMBINED_NAME_AND_VERSION"  # Check expansion outside action
+      # - run: echo "Value of COMBINED_NAME_AND_VERSION outside action: $COMBINED_NAME_AND_VERSION"  # Check expansion outside action
 
       # - uses: actions/create-release@v1
       #   env:
