@@ -56,12 +56,12 @@ jobs:
           body: |
             Release notes for ${{ steps.set_release_variables.outputs.release_name }}
 
-      - run: zip -r ${{ steps.set_release_variables.outputs.release_name }}.zip modules/${{ github.event.inputs.module_name }}
+      - run: zip -r ${{ steps.set_release_variables.outputs.tag_name }}.zip modules/${{ github.event.inputs.module_name }}
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ github.event.repository.url }}/releases/${{ steps.create_release.outputs.id }}/assets
-          asset_path: "${{ steps.set_release_variables.outputs.release_name }}.zip"
-          asset_name: "${{ steps.set_release_variables.outputs.release_name }}.zip"
+          asset_path: "${{ steps.set_release_variables.outputs.tag_name }}.zip"
+          asset_name: "${{ steps.set_release_variables.outputs.tag_name }}.zip"
           asset_content_type: application/zip
