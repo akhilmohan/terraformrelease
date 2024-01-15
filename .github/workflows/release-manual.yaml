@@ -7,7 +7,9 @@ on:
         description: Name of the module to release
         required: true
         type: choice
-        options: ${{ steps.set-module-options.outputs.module_options }}
+        options:
+          - simple_network
+          - simple_storage  # Add more module names as needed
       version_number:
         description: Version number of the release
         required: true
@@ -17,16 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check for jq
-        if: !which jq
-        run: sudo apt-get install jq -y
       - uses: actions/checkout@v3
-      - run: |
-          find modules/ -mindepth 1 -maxdepth 1 -type d -printf '%f\n' > modules.json
-      - run: |
-          options=$(cat modules.json | jq -R .[])
-          echo "::set-output name=module_options::$options"
-        id: set-module-options
       - uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
