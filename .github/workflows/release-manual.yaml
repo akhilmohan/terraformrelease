@@ -42,7 +42,7 @@ jobs:
           else
             NEW_VERSION=${{ github.event.inputs.version }}
           fi
-          COMBINED_NAME_AND_VERSION="${{ github.event.inputs.module_name }} $NEW_VERSION"
+          COMBINED_NAME_AND_VERSION="${{ github.event.inputs.module_name }}-$NEW_VERSION"
           echo "::set-output name=tag_name::${COMBINED_NAME_AND_VERSION}"
           echo "::set-output name=release_name::Release ${COMBINED_NAME_AND_VERSION}"
           echo "::set-output name=new_version::${NEW_VERSION}"
