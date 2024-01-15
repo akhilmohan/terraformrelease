@@ -17,6 +17,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check for jq
+        if: !which jq
+        run: sudo apt-get install jq -y
       - uses: actions/checkout@v3
       - run: |
           find modules/ -mindepth 1 -maxdepth 1 -type d -printf '%f\n' > modules.json
