@@ -1,0 +1,33 @@
+name: Create Module Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      module_name:
+        description: Name of the module to release
+        required: true
+      version_number:
+        description: Version number of the release
+        required: true
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ inputs.module_name }}-v${{ inputs.version_number }}
+          release_name: ${{ inputs.module_name }} v${{ inputs.version_number }}
+          body: |
+            Release notes for ${{ inputs.module_name }} v${{ inputs.version_number }}
+      - run: zip -r ${{ inputs.module_name }}-v${{ inputs.version_number }}.zip modules/${{ inputs.module_name }}
+      - uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ${{ inputs.module_name }}-v${{ inputs.version_number }}.zip
+          asset_name: ${{ inputs.module_name }}-v${{ inputs.version_number }}.zip
+          asset_content_type: application/zip
