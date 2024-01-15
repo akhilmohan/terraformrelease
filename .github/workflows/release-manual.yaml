@@ -37,12 +37,18 @@ jobs:
           fi
           echo "New version: $NEW_VERSION"
 
+          # Combine module name and version into a variable
+          COMBINED_NAME_AND_VERSION="${{ github.event.inputs.module_name }} v$NEW_VERSION"
+
+          # Print the combined value for verification
+          echo "Combined name and version: $COMBINED_NAME_AND_VERSION"
+
       - uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.event.inputs.module_name }}-v$NEW_VERSION  # Adjust tag name if needed
-          release_name: Release ${{ github.event.inputs.module_name }} v$NEW_VERSION  # Adjust release name if needed
+          tag_name: $COMBINED_NAME_AND_VERSION
+          release_name: Release $COMBINED_NAME_AND_VERSION
           body: |
             Release notes for ${{ github.event.inputs.module_name }} v$NEW_VERSION
 
