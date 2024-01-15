@@ -26,36 +26,54 @@ jobs:
   create_release:
     runs-on: ubuntu-latest
 
+    outputs:
+      id: release
+      step: create_release
+
     steps:
       - uses: actions/checkout@v3
-      - run: |
+
+      - name: Set Release Variables
+        id: set_release_variables
+        run: |
           if [[ -z "${{ github.event.inputs.version }}" ]]; then
             # Calculate next version without updating package.json
             NEW_VERSION=$(npm version ${{ github.event.inputs.release_type }} --prefix modules/${{ github.event.inputs.module_name }} --no-git-tag-version)
           else
             NEW_VERSION=${{ github.event.inputs.version }}
           fi
-          echo "NEW_VERSION before concatenation: $NEW_VERSION"  # Inspect NEW_VERSION value
-
-          # Combine module name and version
           COMBINED_NAME_AND_VERSION="${{ github.event.inputs.module_name }} $NEW_VERSION"
-          echo "COMBINED_NAME_AND_VERSION: $COMBINED_NAME_AND_VERSION"  # Verify variable expansion
+          echo "::set-output name=tag_name::${COMBINED_NAME_AND_VERSION}"
+          echo "::set-output name=release_name::Release ${COMBINED_NAME_AND_VERSION}"
+          echo "::set-output name=new_version::${NEW_VERSION}"
 
-      - run: echo "cpmval $COMBINED_NAME_AND_VERSION"
+      - name: Create Release
+        id: create_release
+        run: echo "Creating release"
 
-      - uses: actions/create-release@v1
+      - name: Upload Release Asset
+        run: echo "Uploading release asset"
+
+      - name: Set Tag Name
+        run: echo "Setting tag name"
+        if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
         with:
-          tag_name: "${{ github.event.inputs.module_name }} $NEW_VERSION"
-          release_name: "Release ${{ github.event.inputs.module_name }} $NEW_VERSION"
+          tag_name: ${{ steps.set_release_variables.outputs.tag_name }}
+          release_name: ${{ steps.set_release_variables.outputs.release_name }}
           body: |
-            Release notes for ${{ github.event.inputs.module_name }} $COMBINED_NAME_AND_VERSION
+            Release notes for ${{ github.event.inputs.module_name }} v${{ steps.set_release_variables.outputs.new_version }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
 
-      - run: zip -r "$COMBINED_NAME_AND_VERSION.zip" modules/${{ github.event.inputs.module_name }}  # Enclosed in double quotes
-      - uses: actions/upload-release-asset@v1
+      - name: Zip Module
+        run: zip -r "${{ steps.set_release_variables.outputs.tag_name }}.zip" modules/${{ github.event.inputs.module_name }}
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "$COMBINED_NAME_AND_VERSION.zip"  # Enclosed in double quotes
-          asset_name: "$COMBINED_NAME_AND_VERSION.zip"  # Enclosed in double quotes
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "${{ steps.set_release_variables.outputs.tag_name }}.zip"
+          asset_name: "${{ steps.set_release_variables.outputs.tag_name }}.zip"
           asset_content_type: application/zip
