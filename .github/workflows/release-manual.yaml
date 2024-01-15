@@ -48,7 +48,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ COMBINED_NAME_AND_VERSION }}
-          release_name: "Release $COMBINED_NAME_AND_VERSION"
+          release_name: "Release ${{ github.event.inputs.module_name }} $NEW_VERSION"
           body: |
             Release notes for ${{ github.event.inputs.module_name }} $COMBINED_NAME_AND_VERSION
 
