@@ -47,8 +47,8 @@ jobs:
           echo "::set-output name=release_name::Release ${COMBINED_NAME_AND_VERSION}"
           echo "::set-output name=new_version::${NEW_VERSION}"
 
-      # - name: Create Release
-      #   id: create_release
+      - name: Create Release
+        id: create_release
       - uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
