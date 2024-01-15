@@ -47,10 +47,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: $COMBINED_NAME_AND_VERSION  # Enclosed in double quotes
-          release_name: "Release $COMBINED_NAME_AND_VERSION"  # Enclosed in double quotes
+          tag_name: "$COMBINED_NAME_AND_VERSION"
+          release_name: "Release $COMBINED_NAME_AND_VERSION"
           body: |
-            Release notes for ${{ github.event.inputs.module_name }} v$NEW_VERSION
+            Release notes for ${{ github.event.inputs.module_name }} $COMBINED_NAME_AND_VERSION
 
       - run: zip -r "$COMBINED_NAME_AND_VERSION.zip" modules/${{ github.event.inputs.module_name }}  # Enclosed in double quotes
       - uses: actions/upload-release-asset@v1
