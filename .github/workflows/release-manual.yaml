@@ -49,7 +49,7 @@ jobs:
       - run: zip -r ${{ github.event.inputs.module_name }}-v$NEW_VERSION.zip modules/${{ github.event.inputs.module_name }}
       - uses: actions/upload-release-asset@v1
         with:
-          upload_url: ${{ github.event.release.upload_url }}
+          upload_url: ${{ github.event.release.upload_url }}  # <-- Added upload_url
           asset_path: ${{ github.event.inputs.module_name }}-v$NEW_VERSION.zip
           asset_name: ${{ github.event.inputs.module_name }}-v$NEW_VERSION.zip
           asset_content_type: application/zip
