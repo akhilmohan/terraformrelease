@@ -2,11 +2,11 @@ name: Release please workflow
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - modules/**
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - modules/**
 
 permissions:
   contents: write
