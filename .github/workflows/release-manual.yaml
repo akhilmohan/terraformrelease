@@ -28,34 +28,34 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: |
-          if [[ -z "${{ github.event.inputs.version }}" ]]; then
-            # Calculate next version without updating package.json
-            NEW_VERSION=$(npm version ${{ github.event.inputs.release_type }} --prefix modules/${{ github.event.inputs.module_name }} --no-git-tag-version)
-          else
-            NEW_VERSION=${{ github.event.inputs.version }}
-          fi
-          echo "NEW_VERSION before concatenation: $NEW_VERSION"  # Inspect NEW_VERSION value
+      # - run: |
+      #     if [[ -z "${{ github.event.inputs.version }}" ]]; then
+      #       # Calculate next version without updating package.json
+      #       NEW_VERSION=$(npm version ${{ github.event.inputs.release_type }} --prefix modules/${{ github.event.inputs.module_name }} --no-git-tag-version)
+      #     else
+      #       NEW_VERSION=${{ github.event.inputs.version }}
+      #     fi
+      #     echo "NEW_VERSION before concatenation: $NEW_VERSION"  # Inspect NEW_VERSION value
 
-          # Combine module name and version
-          COMBINED_NAME_AND_VERSION="${{ github.event.inputs.module_name }} $NEW_VERSION"
-          echo "COMBINED_NAME_AND_VERSION: $COMBINED_NAME_AND_VERSION"  # Verify variable expansion
+      #     # Combine module name and version
+      #     COMBINED_NAME_AND_VERSION="${{ github.event.inputs.module_name }} $NEW_VERSION"
+      #     echo "COMBINED_NAME_AND_VERSION: $COMBINED_NAME_AND_VERSION"  # Verify variable expansion
 
-      - run: echo "Value of COMBINED_NAME_AND_VERSION outside action: $COMBINED_NAME_AND_VERSION"  # Check expansion outside action
+      # - run: echo "Value of COMBINED_NAME_AND_VERSION outside action: $COMBINED_NAME_AND_VERSION"  # Check expansion outside action
 
-      - uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: $COMBINED_NAME_AND_VERSION  # Enclosed in double quotes
-          release_name: "Release $COMBINED_NAME_AND_VERSION"  # Enclosed in double quotes
-          body: |
-            Release notes for ${{ github.event.inputs.module_name }} v$NEW_VERSION
+      # - uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: $COMBINED_NAME_AND_VERSION  # Enclosed in double quotes
+      #     release_name: "Release $COMBINED_NAME_AND_VERSION"  # Enclosed in double quotes
+      #     body: |
+      #       Release notes for ${{ github.event.inputs.module_name }} v$NEW_VERSION
 
-      - run: zip -r "$COMBINED_NAME_AND_VERSION.zip" modules/${{ github.event.inputs.module_name }}  # Enclosed in double quotes
-      - uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "$COMBINED_NAME_AND_VERSION.zip"  # Enclosed in double quotes
-          asset_name: "$COMBINED_NAME_AND_VERSION.zip"  # Enclosed in double quotes
-          asset_content_type: application/zip
+      # - run: zip -r "$COMBINED_NAME_AND_VERSION.zip" modules/${{ github.event.inputs.module_name }}  # Enclosed in double quotes
+      # - uses: actions/upload-release-asset@v1
+      #   with:
+      #     upload_url: ${{ github.event.release.upload_url }}
+      #     asset_path: "$COMBINED_NAME_AND_VERSION.zip"  # Enclosed in double quotes
+      #     asset_name: "$COMBINED_NAME_AND_VERSION.zip"  # Enclosed in double quotes
+      #     asset_content_type: application/zip
