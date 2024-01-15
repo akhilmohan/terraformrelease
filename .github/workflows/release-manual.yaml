@@ -35,19 +35,19 @@ jobs:
           else
             NEW_VERSION=${{ github.event.inputs.version }}
           fi
-          echo "New version: $NEW_VERSION"
+          echo "NEW_VERSION before concatenation: $NEW_VERSION"  # Inspect NEW_VERSION value
 
-          # Combine module name and version into a variable
-          COMBINED_NAME_AND_VERSION="${{ github.event.inputs.module_name }} v$NEW_VERSION"
+          # Combine module name and version
+          COMBINED_NAME_AND_VERSION="${{ github.event.inputs.module_name }} $NEW_VERSION"
+          echo "COMBINED_NAME_AND_VERSION: $COMBINED_NAME_AND_VERSION"  # Verify variable expansion
 
-          # Print the combined value for verification
-          echo "Combined name and version: $COMBINED_NAME_AND_VERSION"
+      - run: echo "Value of COMBINED_NAME_AND_VERSION outside action: $COMBINED_NAME_AND_VERSION"  # Check expansion outside action
 
       - uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "$COMBINED_NAME_AND_VERSION"  # Enclosed in double quotes
+          tag_name: $COMBINED_NAME_AND_VERSION  # Enclosed in double quotes
           release_name: "Release $COMBINED_NAME_AND_VERSION"  # Enclosed in double quotes
           body: |
             Release notes for ${{ github.event.inputs.module_name }} v$NEW_VERSION
