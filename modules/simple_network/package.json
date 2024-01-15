@@ -1,0 +1,5 @@
+{
+  "name": "simple_network",
+  "version": "1.0.0",
+  "description": "Terraform module to create a simple network infrastructure"
+}
