@@ -31,7 +31,7 @@ jobs:
       - name: Get Previous Release Version
         id: get_previous_release
         run: |
-          PREVIOUS_RELEASE_VERSION=$(gh release list --limit 1 --json number --jq .[0])
+          PREVIOUS_RELEASE_VERSION=$(gh release list --limit 1 | awk 'NR==2 {print $1}')
           echo "::set-output name=previous_release_version::${PREVIOUS_RELEASE_VERSION}"
 
       - name: Increment Version (if applicable)
